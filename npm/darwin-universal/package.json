@@ -1,0 +1,15 @@
+{
+  "name": "anni-javascript-binding-darwin-universal",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "main": "anni-javascript-binding.darwin-universal.node",
+  "files": [
+    "anni-javascript-binding.darwin-universal.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}
