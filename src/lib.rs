@@ -8,6 +8,7 @@ use anni_repo::{
   prelude::{Album, JsonAlbum},
 };
 use anni_workspace::{AnniWorkspace, ExtractedAlbumInfo, UntrackedWorkspaceAlbum, WorkspaceError};
+use napi::bindgen_prelude::Env;
 use serde::Serialize;
 use std::{
   borrow::Cow,
@@ -37,6 +38,7 @@ impl From<AnniError> for napi::Error {
   }
 }
 
+#[allow(dead_code)]
 fn convert_error<T: Error>(err: T) -> AnniError
 where
   AnniError: From<T>,
@@ -44,6 +46,7 @@ where
   return AnniError::from(err);
 }
 
+#[allow(dead_code)]
 fn serialize_album(json_album: JsonAlbum) -> Result<String, AnniError> {
   let mut album = Album::try_from(json_album).unwrap();
   let album_serialized_text = album.format_to_string();
@@ -56,33 +59,37 @@ fn serialize_album(json_album: JsonAlbum) -> Result<String, AnniError> {
 //   Ok(album_json)
 // }
 
+#[allow(dead_code)]
 #[napi]
-fn read_album_file(path: String) -> Result<String, napi::Error> {
+fn read_album_file(env: Env, path: String) -> napi::Result<napi::JsUnknown> {
   let content = fs::read_to_string(path).unwrap();
   let album = Album::from_str(&content).unwrap();
   let album_json = JsonAlbum::from(album);
-  let result = serialize_album(album_json)?;
+  let result = env.to_js_value(&album_json)?;
   return Ok(result);
 }
 
+#[allow(dead_code)]
 #[napi]
-fn write_album_file(path: String, album_json_str: String) -> Result<(), napi::Error> {
+fn write_album_file(path: String, album_json_str: String) -> napi::Result<()> {
   let album_json = JsonAlbum::from_str(&album_json_str).unwrap();
   let album_serialized_text = serialize_album(album_json)?;
   fs::write(path, album_serialized_text)?;
   Ok(())
 }
 
+#[allow(dead_code)]
 #[napi]
-fn get_workspace_albums(workspace_path: String) -> Result<String, napi::Error> {
+fn get_workspace_albums(env: Env, workspace_path: String) -> napi::Result<napi::JsUnknown> {
   let workspace = AnniWorkspace::find(Path::new(&workspace_path)).map_err(convert_error)?;
   let albums = workspace.scan().map_err(convert_error)?;
-  let result = serde_json::to_string(&albums).unwrap();
+  let result = env.to_js_value(&albums)?;
   return Ok(result);
 }
 
+#[allow(dead_code)]
 #[napi]
-fn create_album(workspace: String, path: String, disc_num: u8) -> Result<(), napi::Error> {
+fn create_album(workspace: String, path: String, disc_num: u8) -> napi::Result<()> {
   let album_id = Uuid::new_v4();
   let workspace_path = Path::new(&workspace);
   let album_path = Path::new(&path);
@@ -102,8 +109,13 @@ struct WorkspaceDiscCopy {
   tracks: Vec<PathBuf>,
 }
 
+#[allow(dead_code)]
 #[napi]
-fn commit_album_prepare(workspace_path: String, album_path: String) -> Result<String, napi::Error> {
+fn commit_album_prepare(
+  env: Env,
+  workspace_path: String,
+  album_path: String,
+) -> napi::Result<napi::JsUnknown> {
   let workspace = AnniWorkspace::find(Path::new(&workspace_path)).map_err(convert_error)?;
   let mut discs_result: Vec<WorkspaceDiscCopy> = Vec::new();
 
@@ -120,13 +132,14 @@ fn commit_album_prepare(workspace_path: String, album_path: String) -> Result<St
     })
   }
 
-  let result = serde_json::to_string(&discs_result).unwrap();
+  let result = env.to_js_value(&discs_result)?;
 
   return Ok(result);
 }
 
+#[allow(dead_code)]
 #[napi]
-fn commit_album(workspace_path: String, album_path: String) -> Result<(), napi::Error> {
+fn commit_album(workspace_path: String, album_path: String) -> napi::Result<()> {
   let workspace = AnniWorkspace::find(Path::new(&workspace_path)).map_err(convert_error)?;
   let validator = |_album: &UntrackedWorkspaceAlbum| -> bool {
     return true;
@@ -159,8 +172,9 @@ fn commit_album(workspace_path: String, album_path: String) -> Result<(), napi::
   Ok(())
 }
 
+#[allow(dead_code)]
 #[napi]
-fn publish_album(workspace_path: String, album_path: String) -> Result<(), napi::Error> {
+fn publish_album(workspace_path: String, album_path: String) -> napi::Result<()> {
   let workspace = AnniWorkspace::find(Path::new(&workspace_path)).map_err(convert_error)?;
   workspace.apply_tags(&album_path).map_err(convert_error)?;
   workspace
