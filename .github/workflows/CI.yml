@@ -175,7 +175,7 @@ jobs:
                       target/
                   key: x86_64-unknown-linux-gnu-cargo-ubuntu-latest
             - name: Install dependencies
-              run: apt install -y build-essential && yarn install
+              run: sudo apt install -y build-essential && yarn install
             - name: Build
               run: yarn build && stripe *.node
             - name: Upload artifact
