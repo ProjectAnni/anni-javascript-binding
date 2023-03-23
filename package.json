@@ -4,7 +4,7 @@
     "main": "index.js",
     "types": "index.d.ts",
     "napi": {
-        "name": "anni-javascript-binding",
+        "name": "@anni-rs/anni-javascript-binding",
         "triples": {
             "additional": [
                 "aarch64-apple-darwin",
