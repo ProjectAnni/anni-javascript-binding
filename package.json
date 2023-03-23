@@ -1,5 +1,5 @@
 {
-    "name": "anni-javascript-binding",
+    "name": "@anni-rs/anni-javascript-binding",
     "version": "0.0.0",
     "main": "index.js",
     "types": "index.d.ts",
