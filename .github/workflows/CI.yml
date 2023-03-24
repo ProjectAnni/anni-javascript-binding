@@ -127,12 +127,12 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: bindings-x86_64-apple-darwin
-                  path: artifacts
+                  path: "artifacts/@anni-rs"
             - name: Download macOS arm64 artifact
               uses: actions/download-artifact@v3
               with:
                   name: bindings-aarch64-apple-darwin
-                  path: artifacts
+                  path: "artifacts/@anni-rs"
             - name: Combine binaries
               run: yarn universal
             - name: Upload artifact
