@@ -134,7 +134,7 @@ jobs:
                   name: bindings-aarch64-apple-darwin
                   path: "artifacts/@anni-rs"
             - name: Combine binaries
-              run: yarn universal
+              run: mkdir @anni-rs && yarn universal
             - name: Upload artifact
               uses: actions/upload-artifact@v3
               with:
