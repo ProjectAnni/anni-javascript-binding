@@ -1,7 +1,7 @@
 name: CI
 env:
     DEBUG: napi:*
-    APP_NAME: anni-javascript-binding
+    APP_NAME: "@anni-rs/anni-javascript-binding"
     MACOSX_DEPLOYMENT_TARGET: "10.13"
 "on":
     push:
