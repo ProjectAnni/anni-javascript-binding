@@ -1,6 +1,6 @@
 {
   "name": "@anni-rs/anni-javascript-binding-win32-x64-msvc",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "os": [
     "win32"
   ],
