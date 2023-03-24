@@ -1,5 +1,5 @@
 {
-  "name": "anni-javascript-binding-linux-x64-gnu",
+  "name": "@anni-rs/anni-javascript-binding-linux-x64-gnu",
   "version": "1.0.0",
   "os": [
     "linux"

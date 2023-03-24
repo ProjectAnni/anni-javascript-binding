@@ -1,5 +1,5 @@
 {
-  "name": "anni-javascript-binding-darwin-universal",
+  "name": "@anni-rs/anni-javascript-binding-darwin-universal",
   "version": "1.0.0",
   "os": [
     "darwin"

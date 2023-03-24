@@ -1,5 +1,5 @@
 {
-  "name": "anni-javascript-binding-darwin-arm64",
+  "name": "@anni-rs/anni-javascript-binding-darwin-arm64",
   "version": "1.0.0",
   "os": [
     "darwin"
